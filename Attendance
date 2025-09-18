@@ -1,0 +1,30 @@
+# Importing the package
+import pandas as pd
+from sklearn import linear_model
+
+# Loading the data
+data = pd.read_csv('Attendance.csv')
+
+# Displaying the first 5 rows of the data
+print(data.head())
+
+print()
+
+# Displaying information about the data
+data.info()
+
+print()
+
+data['Test'].replace(['Y', 'N'], [1,0], inplace=True)
+data['BakeSale'].replace(['Y', 'N'], [1,0], inplace=True)
+
+print("data",data)
+
+X = data[['Test', 'BakeSale', 'Teachers']]
+Y = data['Attendance']
+
+regr = linear_model.LinearRegression()
+regr.fit(X, Y)
+
+predictedAtt = regr.predict([[0, 1, 10]])
+print(predictedAtt)

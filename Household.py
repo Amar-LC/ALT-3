@@ -58,15 +58,37 @@ print(RMSE)
 print()
 print("JUDGING QUALITY OF RMSE")
 Quality = RMSE/(y.max()-y.min())
-print(Quality,"here")
+print(Quality)
 
-while Factor != Population
+Factor = 0
+
+while Factor != 'Population' or Factor != 'Inflation' or Factor != 'House GDI' or Factor != 'Migration' or Factor != 'Crime':
     Factor = input("""Which factor would you like to see graphed?
-    1. Population""")
+    1. Population
+    2. Inflation
+    3. House GDI
+    4. Migration
+    5. Crime
+    """)
+    if Factor == 'Population' or Factor == 'Inflation' or Factor == 'House GDI' or Factor == 'Migration' or Factor == 'Crime':
+        break
+    print("That is not a factor available. Please ensure spelling is correct.")
 
 LineX = np.array(X_train[Factor])
 Liney = np.array(y_train)
 m, c = np.polyfit(LineX, Liney, 1)
 LBF = m * LineX + c #Equation of a straight line: y = mx+c
+plt.scatter(LineX, Liney, color='red')
+if Factor == 'Population':
+    plt.xlabel(Factor)
+if Factor == 'Inflation':
+    plt.xlabel(Factor)
+if Factor == 'House GDI':
+    plt.xlabel(Factor)
+if Factor == 'Migration':
+    plt.xlabel(Factor, "in thousands")
+if Factor == 'Crime':
+    plt.xlabel(Factor)
+plt.ylabel("House Prices per thousand")
 plt.plot(LineX, LBF)
 plt.show()

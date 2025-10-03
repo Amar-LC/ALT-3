@@ -10,15 +10,12 @@ import matplotlib.pyplot as plt
 df = pd.read_csv('House Price Factors.csv')
 df2 = pd.read_csv('House Price Avg.csv')
 
-# Displaying information about the data
-print("INFO ON DATA")
-df.info()
-
-print()
-
-# Displaying the actual data
-print("DATA")
+# Displaying data
+print("FACTORS DATA")
 print(df)
+print()
+print("PRICE DATA")
+print(df2)
 
 # Creating Inputs and Outputs
 X = df[['Population', 'Inflation', 'House GDI', 'Migration', 'Crime']] #Inputs
@@ -54,37 +51,47 @@ print(y_pred)
 print()
 print("RMSE")
 print(RMSE)
+print()
 
-Factor = 0
+Factor = 0 #Initialising variable
 
-while Factor != 'Population' or Factor != 'Inflation' or Factor != 'House GDI' or Factor != 'Migration' or Factor != 'Crime':
+#Asking user to select which factor to graph against house prices
+# While loop allows the question to be repeated in the case of incorrect user inputs
+while Factor != 'Population' or Factor != 'Inflation' or Factor != 'House gdi' or Factor != 'Migration' or Factor != 'Crime':
     Factor = input("""Which factor would you like to see graphed?
     1. Population
     2. Inflation
     3. House GDI
     4. Migration
     5. Crime
-    """)
-    if Factor == 'Population' or Factor == 'Inflation' or Factor == 'House GDI' or Factor == 'Migration' or Factor == 'Crime':
-        break
+    """).capitalize() #.capitalize() takes into consideration the different capitalisation methods of different users when typing
+    if Factor == 'Population' or Factor == 'Inflation' or Factor == 'House gdi' or Factor == 'Migration' or Factor == 'Crime':
+        break 
+    print()
     print("That is not a factor available. Please ensure spelling is correct.")
+    print()
+   
+# Change the value of factor if user chooses House GDI as the .capitalize() earlier will turn the G, D, and I lowercase
+if Factor == 'House gdi': 
+    Factor = 'House GDI'
 
+# Creating a line of best fit
 LineX = np.array(X_train[Factor])
 Liney = np.array(y_train)
 m, c = np.polyfit(LineX, Liney, 1)
 LBF = m * LineX + c #Equation of a straight line: y = mx+c
 plt.scatter(LineX, Liney, color='red')
+# Giving labels for the x and y axis
 if Factor == 'Population':
-    plt.xlabel(Factor)
+    plt.xlabel(Factor + " per millions")
 if Factor == 'Inflation':
-    plt.xlabel(Factor)
+    plt.xlabel(Factor + " in %")
 if Factor == 'House GDI':
     plt.xlabel(Factor)
 if Factor == 'Migration':
-    plt.xlabel(Factor, "in thousands")
+    plt.xlabel(Factor + " per thousands")
 if Factor == 'Crime':
     plt.xlabel(Factor)
 plt.ylabel("House Prices per thousand")
 plt.plot(LineX, LBF)
 plt.show()
-

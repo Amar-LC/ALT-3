@@ -55,11 +55,6 @@ print()
 print("RMSE")
 print(RMSE)
 
-print()
-print("JUDGING QUALITY OF RMSE")
-Quality = RMSE/(y.max()-y.min())
-print(Quality)
-
 Factor = 0
 
 while Factor != 'Population' or Factor != 'Inflation' or Factor != 'House GDI' or Factor != 'Migration' or Factor != 'Crime':
@@ -92,3 +87,4 @@ if Factor == 'Crime':
 plt.ylabel("House Prices per thousand")
 plt.plot(LineX, LBF)
 plt.show()
+
